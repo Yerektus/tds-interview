@@ -10,7 +10,5 @@ export async function fetchUsers(): Promise<User[]> {
     "https://dummyjson.com/users"
   );
 
-  console.log(response)
-
   return response.data.users.map((userResponse) => mapUserResponseToUser(userResponse));
 }

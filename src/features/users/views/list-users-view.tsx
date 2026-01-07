@@ -21,9 +21,10 @@ import {
 } from "@/common/components/ui/dropdown-menu";
 import { Input } from "@/common/components/ui/input";
 import type { User } from "@/common/entities/user";
-import { useQuery } from "@tanstack/react-query";
-import { fetchUsers } from "@/common/api/requests/fetch-users";
 import { UsersTable } from "../components/users-table/users-table";
+import { useAppDispatch, useAppSelector } from "@/common/hooks/store-hook";
+import { loadUsers, selectUsers } from "../stores/users-store";
+import { useEffect } from "react";
 
 const columns: ColumnDef<User>[] = [
   {
@@ -127,6 +128,9 @@ const columns: ColumnDef<User>[] = [
 ];
 
 export function ListUsersView() {
+  const dispatch = useAppDispatch();
+  const data = useAppSelector(selectUsers);
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -135,11 +139,9 @@ export function ListUsersView() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const { data } = useQuery<User[]>({
-    queryKey: ["users"],
-    queryFn: fetchUsers,
-    retry: false,
-  });
+  useEffect(() => {
+    dispatch(loadUsers());
+  }, [dispatch]);
 
   const table = useReactTable({
     data: data || [],
