@@ -164,14 +164,14 @@ export function ListUsersView() {
 
   return (
     <div className="w-full px-10">
-      <div className="flex items-center py-4">
+      <div className="flex gap-3 items-center py-4">
         <Input
           placeholder="Filter emails..."
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("email")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-full"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -205,8 +205,8 @@ export function ListUsersView() {
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="text-muted-foreground flex-1 text-sm">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+          Page {table.getState().pagination.pageIndex + 1} of{" "}
+          {table.getPageCount()}
         </div>
         <div className="space-x-2">
           <Button
