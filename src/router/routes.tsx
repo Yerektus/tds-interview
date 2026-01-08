@@ -8,8 +8,12 @@ const routes: RouteObject[] = [
     element: <ListUsersView />,
   },
   {
-    path: "users/:userId/edit",
+    path: "/users/:userId/edit",
     element: <UserDetailView />,
+  },
+  {
+    path: "/*",
+    element: <ListUsersView />,
   },
 ];
 
