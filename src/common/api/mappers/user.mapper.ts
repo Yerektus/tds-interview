@@ -7,5 +7,7 @@ export function mapUserResponseToUser(userResponse: UserResponse): User {
     firstname: userResponse.firstName,
     lastname: userResponse.lastName,
     email: userResponse.email,
+    skills: userResponse.skills,
+    createdAt: userResponse.createdAt,
   };
 }

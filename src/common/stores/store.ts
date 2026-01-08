@@ -1,10 +1,12 @@
-import { usersReducer } from '@/features/users/stores/users-store';
 import { configureStore } from '@reduxjs/toolkit'
+import { usersApi } from '../api/users-api';
 
 export const store = configureStore({
     reducer: {
-        users: usersReducer,
+        [usersApi.reducerPath]: usersApi.reducer,
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(usersApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

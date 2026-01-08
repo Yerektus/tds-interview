@@ -46,7 +46,7 @@ export const UsersTable = ({ table, columns }: UsersTableProps) => {
           ))
         ) : (
           <TableRow>
-            <TableCell colSpan={columns.length} className="h-24 text-center">
+            <TableCell colSpan={columns.length} className="h-80 text-center">
               No results.
             </TableCell>
           </TableRow>

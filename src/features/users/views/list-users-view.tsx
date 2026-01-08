@@ -10,7 +10,7 @@ import {
   type SortingState,
   type VisibilityState,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown } from "lucide-react";
+import { ArrowUpDown, ChevronDown, Pencil, Plus, PlusCircle, Trash } from "lucide-react";
 
 import { Button } from "@/common/components/ui/button";
 import {
@@ -22,11 +22,11 @@ import {
 import { Input } from "@/common/components/ui/input";
 import type { User } from "@/common/entities/user";
 import { UsersTable } from "../components/users-table/users-table";
-import { useAppDispatch, useAppSelector } from "@/common/hooks/store-hook";
-import { loadUsers, selectUsers } from "../stores/users-store";
-import { useEffect } from "react";
+import { useGetUsersQuery } from "@/common/api/users-api";
+import { formatDateTime } from "@/common/utils/date-time-formatter";
+import { useNavigate } from "react-router";
 
-const columns: ColumnDef<User>[] = [
+const createColumns = (navigateUserEdit: (userId: number) => void): ColumnDef<User>[] => [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -105,7 +105,7 @@ const columns: ColumnDef<User>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("skills")}</div>
+      <div className="lowercase">{row.original.skills.join(", ")}</div>
     ),
   },
   {
@@ -122,12 +122,32 @@ const columns: ColumnDef<User>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("createdAt")}</div>
+      <div className="lowercase">
+        {formatDateTime(row.getValue("createdAt"))}
+      </div>
     ),
+  },
+  {
+    id: "actions",
+    enableHiding: false,
+    enableSorting: false,
+    cell: ({ row }) => {
+      return (
+        <div className="flex gap-2">
+          <Button variant="outline" size="icon" className="rounded-full" onClick={() => navigateUserEdit(row.original.id)}>
+            <Pencil />
+          </Button>
+          <Button variant="destructive" size="icon" className="rounded-full">
+            <Trash />
+          </Button>
+        </div>
+      );
+    },
   },
 ];
 
 export function ListUsersView() {
+  const navigate = useNavigate()
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -136,12 +156,9 @@ export function ListUsersView() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const dispatch = useAppDispatch();
-  const data = useAppSelector(selectUsers);
+  const { data } = useGetUsersQuery();
 
-  useEffect(() => {
-    dispatch(loadUsers());
-  }, [dispatch]);
+  const columns = React.useMemo(() => createColumns((userId: number) => navigate(`/users/${userId}/edit`)), []);
 
   const table = useReactTable({
     data: data || [],
@@ -201,6 +218,13 @@ export function ListUsersView() {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+        <Button
+            variant="default"
+            onClick={() => table.previousPage()}
+          >
+            Add User
+            <PlusCircle />
+        </Button>
       </div>
       <div className="overflow-hidden rounded-md border">
         <UsersTable table={table} columns={columns} />
