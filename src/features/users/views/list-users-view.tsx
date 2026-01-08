@@ -128,9 +128,6 @@ const columns: ColumnDef<User>[] = [
 ];
 
 export function ListUsersView() {
-  const dispatch = useAppDispatch();
-  const data = useAppSelector(selectUsers);
-
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -138,6 +135,9 @@ export function ListUsersView() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+
+  const dispatch = useAppDispatch();
+  const data = useAppSelector(selectUsers);
 
   useEffect(() => {
     dispatch(loadUsers());
