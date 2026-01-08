@@ -7,7 +7,7 @@ export async function fetchUsers(): Promise<User[]> {
   const response = await axios.get<{
     users: UserResponse[]
   }>(
-    "https://dummyjson.com/users"
+    `${import.meta.env.VITE_API_URL}/users`
   );
 
   return response.data.users.map((userResponse) => mapUserResponseToUser(userResponse));
