@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:all": "concurrently -k \"npm run dev\" \"npm run json-server\"",
+    "dev:all": "concurrently -k \"npx json-server --watch db.json --port 3001\" \"npm run dev\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
