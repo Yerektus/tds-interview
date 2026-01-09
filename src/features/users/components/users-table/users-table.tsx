@@ -8,8 +8,12 @@ import {
 } from "@/common/components/ui/table";
 import { flexRender } from "@tanstack/react-table";
 import type { UsersTableProps } from "./users-table.types";
+import { useNavigate } from "react-router";
+import { paths } from "@/common/constants/paths";
 
 export const UsersTable = ({ table, columns }: UsersTableProps) => {
+  const navigate = useNavigate();
+  
   return (
     <Table>
       <TableHeader>
@@ -35,7 +39,10 @@ export const UsersTable = ({ table, columns }: UsersTableProps) => {
           table.getRowModel().rows.map((row) => (
             <TableRow
               key={row.id}
-              data-state={row.getIsSelected() && "selected"}
+              role="link"
+              className="hover:bg-muted/80 cursor-pointer z-5"
+              onClick={() => navigate(paths.getUserDetailPath(row.original.id))}
+              aria-label={`Open profile of ${row.original.firstname} ${row.original.lastname}`}
             >
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id}>

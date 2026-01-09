@@ -12,7 +12,6 @@ import {
 } from "@tanstack/react-table";
 import {
   ArrowUpDown,
-  Pencil,
   Trash,
 } from "lucide-react";
 
@@ -29,8 +28,7 @@ import { UsersTablePaginations } from "../components/users-table-paginations/use
 import { paths } from "@/common/constants/paths";
 
 const createColumns = (
-  handleDeleteButtonClick: (id: string) => void,
-  navigateUserEdit: (userId: string) => void
+  handleDeleteButtonClick: (id: string) => void
 ): ColumnDef<User>[] => [
   {
     accessorKey: "id",
@@ -131,16 +129,11 @@ const createColumns = (
     enableSorting: false,
     cell: ({ row }) => {
       return (
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            className="rounded-full"
-            onClick={() => navigateUserEdit(row.original.id)}
-          >
-            <Pencil />
-          </Button>
-          <Button onClick={() => handleDeleteButtonClick(row.original.id)} variant="destructive" size="icon" className="rounded-full">
+        <div className="z-10">
+          <Button onClick={(e) => {
+            e.stopPropagation();
+            handleDeleteButtonClick(row.original.id)}
+          } variant="destructive" size="icon" className="rounded-full">
             <Trash />
           </Button>
         </div>
@@ -205,7 +198,7 @@ export function ListUsersView() {
 
   const tableData = React.useMemo(() => data ?? [], [data])
 
-  const columns = React.useMemo(() => createColumns(onDeleteButtonClick, onOpenDetailUser),
+  const columns = React.useMemo(() => createColumns(onDeleteButtonClick),
     [onDeleteButtonClick, onOpenDetailUser]
 );
 

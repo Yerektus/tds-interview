@@ -90,6 +90,7 @@ export const UpdateUserModal = ({
         lastName: form.getValues().lastname,
         email: form.getValues().email,
         skills: form.getValues().skills,
+        createdAt: user.createdAt
       },
     });
 
