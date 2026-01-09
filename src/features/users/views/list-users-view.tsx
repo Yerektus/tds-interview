@@ -195,13 +195,22 @@ export function ListUsersView() {
     }
   };
 
-  const columns = React.useMemo(
-    () => createColumns(handleDeleteButtonClick, (userId: string) => navigate(paths.getUserDetailPath(userId))),
-    []
-  );
+  const onDeleteButtonClick = React.useCallback((userId: string) => {
+      handleDeleteButtonClick(userId)
+  }, [handleDeleteButtonClick])
+
+  const onOpenDetailUser = React.useCallback((userId: string) => {
+    navigate(paths.getUserDetailPath(userId))
+  }, [navigate]);
+
+  const tableData = React.useMemo(() => data ?? [], [data])
+
+  const columns = React.useMemo(() => createColumns(onDeleteButtonClick, onOpenDetailUser),
+    [onDeleteButtonClick, onOpenDetailUser]
+);
 
   const table = useReactTable({
-    data: data || [],
+    data: tableData,
     columns,
 
     onSortingChange: setSorting,
@@ -213,15 +222,6 @@ export function ListUsersView() {
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-
-    initialState: {
-      sorting: [
-        {
-          id: "createdAt",
-          desc: true,
-        },
-      ],
-    },
 
     state: {
       sorting,
