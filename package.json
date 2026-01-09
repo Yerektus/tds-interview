@@ -7,7 +7,9 @@
     "dev": "vite",
     "dev:all": "concurrently -k \"npx json-server --watch db.json --port 3001\" \"npm run dev\"",
     "build": "tsc -b && vite build",
+    "lint:fix": "eslint . --fix",
     "lint": "eslint .",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,json}\"",
     "preview": "vite preview"
   },
   "dependencies": {
