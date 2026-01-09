@@ -9,9 +9,9 @@ import {
 } from "@/common/components/ui/card";
 import type { User } from "@/common/entities/user";
 import { formatDateTime } from "@/common/utils/date-time-formatter";
-import { DetailUserBreadcrumbs } from "@/features/components/detail-user-breadcrumbs/detail-user-breadcrumbs";
-import { UpdateUserModal } from "@/features/components/update-user-modal/update-user-modal";
-import { UserDataDisplay } from "@/features/components/user-data-display/user-data-display";
+import { DetailUserBreadcrumbs } from "@/features/detail-user/components/detail-user-breadcrumbs/detail-user-breadcrumbs";
+import { UpdateUserModal } from "@/features/detail-user/components/update-user-modal/update-user-modal";
+import { UserDataDisplay } from "@/features/detail-user/components/user-data-display/user-data-display";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
 import { useParams } from "react-router";
