@@ -23,6 +23,7 @@ import { DeleteUserDialog } from "../components/delete-user-dialog/delete-user-d
 import { UsersTableToolbar } from "../components/users-table-toolbar/users-table-toolbar";
 import { UsersTablePaginations } from "../components/users-table-paginations/users-table-paginations";
 import { paths } from "@/common/constants/paths";
+import { DetailUserBreadcrumbs } from "../components/users-table-breadcrumbs/users-table-breadcrumbs";
 
 const createColumns = (handleDeleteButtonClick: (id: string) => void): ColumnDef<User>[] => [
   {
@@ -201,18 +202,21 @@ export function ListUsersView() {
   console.log(data);
 
   return (
-    <div className="w-full px-10">
-      <div className="py-4">
-        <UsersTableToolbar table={table} handleAddUserButtonClick={handleAddUserButtonClick} />
+    <div>
+      <DetailUserBreadcrumbs />
+      <div className="w-full px-10">
+        <div className="py-4">
+          <UsersTableToolbar table={table} handleAddUserButtonClick={handleAddUserButtonClick} />
+        </div>
+        <div className="overflow-hidden rounded-md border">
+          <UsersTable table={table} columns={columns} />
+        </div>
+        <div className="py-4">
+          <UsersTablePaginations table={table} />
+        </div>
+        <AddUserModal isOpen={isAddUserModalOpen} onClose={handleAddUserButtonClose} />
+        <DeleteUserDialog id={deleteUserId} isOpen={isDeleteDialogOpen} onClose={handleDeleteDialogClose} />
       </div>
-      <div className="overflow-hidden rounded-md border">
-        <UsersTable table={table} columns={columns} />
-      </div>
-      <div className="py-4">
-        <UsersTablePaginations table={table} />
-      </div>
-      <AddUserModal isOpen={isAddUserModalOpen} onClose={handleAddUserButtonClose} />
-      <DeleteUserDialog id={deleteUserId} isOpen={isDeleteDialogOpen} onClose={handleDeleteDialogClose} />
     </div>
   );
 }
