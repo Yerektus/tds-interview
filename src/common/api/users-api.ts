@@ -22,7 +22,7 @@ export const usersApi = createApi({
             ]
           : [{ type: "Users", id: "LIST" }],
     }),
-    getUserById: builder.query<User, number>({
+    getUserById: builder.query<User, string>({
       query: (id) => `/users/${id}`,
       transformResponse: (response: UserResponse) => mapUserResponseToUser(response),
       providesTags: (_result, _err, id) => [{ type: "User", id }],
@@ -36,7 +36,7 @@ export const usersApi = createApi({
       transformResponse: (response: UserResponse) => mapUserResponseToUser(response),
       invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
-    updateUser: builder.mutation<User, { id: number; body: Partial<UserCreateDto> }>({
+    updateUser: builder.mutation<User, { id: string; body: Partial<UserCreateDto> }>({
       query: ({ id, body }) => ({
         url: `/users/${id}`,
         method: "PUT",
@@ -45,7 +45,7 @@ export const usersApi = createApi({
       transformResponse: (response: UserResponse) => mapUserResponseToUser(response),
       invalidatesTags: (_result, _err, { id }) => [{ type: "User", id }, { type: "Users", id: "LIST" }],
     }),
-    deleteUser: builder.mutation<{ success: boolean; id: number }, number>({
+    deleteUser: builder.mutation<User, string>({
       query: (id) => ({
         url: `/users/${id}`,
         method: "DELETE",

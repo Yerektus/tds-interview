@@ -188,17 +188,6 @@
       "createdAt": "2025-01-17T09:00:00.000Z"
     },
     {
-      "id": "w8l1",
-      "firstName": "Logan",
-      "lastName": "Torres",
-      "email": "logan.torres@x.dummyjson.com",
-      "skills": [
-        "Training",
-        "Data Analyst"
-      ],
-      "createdAt": "2025-01-18T09:00:00.000Z"
-    },
-    {
       "id": "0q4e",
       "firstName": "Abigail",
       "lastName": "Rivera",
@@ -243,28 +232,6 @@
       "createdAt": "2025-01-22T09:00:00.000Z"
     },
     {
-      "id": "2z8p",
-      "firstName": "Chloe",
-      "lastName": "Morales",
-      "email": "chloe.morales@x.dummyjson.com",
-      "skills": [
-        "Sales",
-        "Database Administrator"
-      ],
-      "createdAt": "2025-01-23T09:00:00.000Z"
-    },
-    {
-      "id": "n0x5",
-      "firstName": "Mateo",
-      "lastName": "Nguyen",
-      "email": "mateo.nguyen@x.dummyjson.com",
-      "skills": [
-        "Accounting",
-        "Business Analyst"
-      ],
-      "createdAt": "2025-01-24T09:00:00.000Z"
-    },
-    {
       "id": "v4t6",
       "firstName": "Harper",
       "lastName": "Kelly",
@@ -276,89 +243,24 @@
       "createdAt": "2025-01-25T09:00:00.000Z"
     },
     {
-      "id": "y1e7",
-      "firstName": "Evelyn",
-      "lastName": "Gonzalez",
-      "email": "evelyn.gonzalez@x.dummyjson.com",
-      "skills": [
-        "Accounting",
-        "Project Manager"
-      ],
-      "createdAt": "2025-01-26T09:00:00.000Z"
-    },
-    {
-      "id": "q9k3",
-      "firstName": "Daniel",
-      "lastName": "Cook",
-      "email": "daniel.cook@x.dummyjson.com",
-      "skills": [
-        "Support",
-        "Legal Counsel"
-      ],
-      "createdAt": "2025-01-27T09:00:00.000Z"
-    },
-    {
-      "id": "5b0f",
-      "firstName": "Lily",
-      "lastName": "Lee",
-      "email": "lily.lee@x.dummyjson.com",
-      "skills": [
-        "Product Management",
-        "Quality Assurance Engineer"
-      ],
-      "createdAt": "2025-01-28T09:00:00.000Z"
-    },
-    {
-      "id": "m8s2",
-      "firstName": "Henry",
-      "lastName": "Hill",
-      "email": "henry.hill@x.dummyjson.com",
-      "skills": [
-        "Services",
-        "Sales Manager"
-      ],
-      "createdAt": "2025-01-29T09:00:00.000Z"
-    },
-    {
-      "id": "r0a9",
-      "firstName": "Arman",
-      "lastName": "Tulegenov",
-      "email": "arman.tulegenov@example.com",
-      "skills": [
-        "React",
-        "TypeScript"
-      ],
-      "createdAt": "2025-01-30T09:00:00.000Z"
-    },
-    {
-      "id": "4b0f",
-      "firstName": "Yerdos",
-      "lastName": "Yerentalov",
-      "email": "qop6261@gmail.com",
-      "skills": [
-        "Product manager"
-      ],
-      "createdAt": "2026-01-08T21:50:41.987Z"
-    },
-    {
-      "id": "84d9",
-      "firstName": "John",
-      "lastName": "Yerentalov",
-      "email": "qop6261@gmail.com",
-      "skills": [
-        "Product manager"
-      ],
-      "createdAt": "2026-01-08T22:03:15.390Z"
-    },
-    {
-      "id": "8436",
+      "id": "a2c5",
       "firstName": "John",
       "lastName": "Smith",
       "email": "qop6261@gmail.com",
       "skills": [
         "Product manager"
       ],
-      "createdAt": "2026-01-08T22:16:40.626Z"
+      "createdAt": "2026-01-09T08:07:43.766Z"
+    },
+    {
+      "id": "e9c7",
+      "firstName": "Yerdos",
+      "lastName": "Yerentalov",
+      "email": "qop6261@gmail.com",
+      "skills": [
+        "Product manager"
+      ],
+      "createdAt": "2026-01-09T08:31:59.606Z"
     }
   ]
 }

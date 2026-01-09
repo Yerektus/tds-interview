@@ -62,7 +62,6 @@ export const AddUserModal = ({ isOpen, onClose }: AddUserModalProps) => {
   };
 
   const handleSubmit = () => {
-    console.log(form.formState.isValid);
     if (!form.formState.isValid) {
       return
     }

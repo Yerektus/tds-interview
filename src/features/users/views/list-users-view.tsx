@@ -12,28 +12,23 @@ import {
 } from "@tanstack/react-table";
 import {
   ArrowUpDown,
-  ChevronDown,
   Pencil,
-  PlusCircle,
   Trash,
 } from "lucide-react";
 
 import { Button } from "@/common/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/common/components/ui/dropdown-menu";
-import { Input } from "@/common/components/ui/input";
 import type { User } from "@/common/entities/user";
 import { UsersTable } from "../components/users-table/users-table";
 import { useGetUsersQuery } from "@/common/api/users-api";
 import { formatDateTime } from "@/common/utils/date-time-formatter";
 import { useNavigate } from "react-router";
 import { AddUserModal } from "../components/add-user/add-user-modal";
+import { DeleteUserDialog } from "../components/delete-user-dialog/delete-user-dialog";
+import { UsersTableToolbar } from "../components/users-table-toolbar/users-table-toolbar";
+import { UsersTablePaginations } from "../components/users-table-paginations/users-table-paginations";
 
 const createColumns = (
+  handleDeleteButtonClick: (id: string) => void,
   navigateUserEdit: (userId: string) => void
 ): ColumnDef<User>[] => [
   {
@@ -144,7 +139,7 @@ const createColumns = (
           >
             <Pencil />
           </Button>
-          <Button variant="destructive" size="icon" className="rounded-full">
+          <Button onClick={() => handleDeleteButtonClick(row.original.id)} variant="destructive" size="icon" className="rounded-full">
             <Trash />
           </Button>
         </div>
@@ -169,11 +164,38 @@ export function ListUsersView() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const [isAddUserModalOpen, setIsAddUserModalOpen] = React.useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = React.useState(false);
+  const [deleteUserId, setDeleteUserId] = React.useState("");
 
   const { data, refetch } = useGetUsersQuery();
 
+  const handleAddUserButtonClick = () => {
+    setIsAddUserModalOpen(true);
+  };
+
+  const handleAddUserButtonClose = (needRefresh?: boolean) => {
+    setIsAddUserModalOpen(false);
+    if (needRefresh) {
+      console.log(true)
+      refetch();
+    }
+  };
+
+  const handleDeleteButtonClick = (id: string) => {
+    setDeleteUserId(id);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDeleteDialogClose = (needRefresh?: boolean) => {
+    setIsDeleteDialogOpen(false);
+    setDeleteUserId("");
+    if (needRefresh) {
+      refetch();
+    }
+  };
+
   const columns = React.useMemo(
-    () => createColumns((userId: string) => navigate(`/users/${userId}/edit`)),
+    () => createColumns(handleDeleteButtonClick, (userId: string) => navigate(`/users/${userId}/edit`)),
     []
   );
 
@@ -210,90 +232,26 @@ export function ListUsersView() {
 
   console.log(data);
 
-  const handleAddUserButtonClick = () => {
-    setIsAddUserModalOpen(true);
-  };
-
-  const handleAddUserButtonClose = (needRefresh?: boolean) => {
-    setIsAddUserModalOpen(false);
-    if (needRefresh) {
-      refetch();
-    }
-  };
-
   return (
     <div className="w-full px-10">
-      <div className="flex gap-3 items-center py-4">
-        <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-full"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <Button variant="default" onClick={handleAddUserButtonClick}>
-          Add User
-          <PlusCircle />
-        </Button>
+      <div className="py-4">
+        <UsersTableToolbar table={table} handleAddUserButtonClick={handleAddUserButtonClick} />
       </div>
       <div className="overflow-hidden rounded-md border">
         <UsersTable table={table} columns={columns} />
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="text-muted-foreground flex-1 text-sm">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount()}
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
+      <div className="py-4">
+        <UsersTablePaginations table={table} />
       </div>
       <AddUserModal
         isOpen={isAddUserModalOpen}
         onClose={handleAddUserButtonClose}
       />
+      <DeleteUserDialog 
+        id={deleteUserId}
+        isOpen={isDeleteDialogOpen}
+        onClose={handleDeleteDialogClose}
+       />
     </div>
   );
 }
