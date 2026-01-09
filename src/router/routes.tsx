@@ -8,7 +8,7 @@ const routes: RouteObject[] = [
     element: <ListUsersView />,
   },
   {
-    path: "/users/:userId/edit",
+    path: "/users/:userId",
     element: <UserDetailView />,
   },
   {

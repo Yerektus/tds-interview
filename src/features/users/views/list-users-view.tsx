@@ -26,6 +26,7 @@ import { AddUserModal } from "../components/add-user/add-user-modal";
 import { DeleteUserDialog } from "../components/delete-user-dialog/delete-user-dialog";
 import { UsersTableToolbar } from "../components/users-table-toolbar/users-table-toolbar";
 import { UsersTablePaginations } from "../components/users-table-paginations/users-table-paginations";
+import { paths } from "@/common/constants/paths";
 
 const createColumns = (
   handleDeleteButtonClick: (id: string) => void,
@@ -195,7 +196,7 @@ export function ListUsersView() {
   };
 
   const columns = React.useMemo(
-    () => createColumns(handleDeleteButtonClick, (userId: string) => navigate(`/users/${userId}/edit`)),
+    () => createColumns(handleDeleteButtonClick, (userId: string) => navigate(paths.getUserDetailPath(userId))),
     []
   );
 
