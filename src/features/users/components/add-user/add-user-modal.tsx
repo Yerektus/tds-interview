@@ -166,6 +166,7 @@ export const AddUserModal = ({ isOpen, onClose }: AddUserModalProps) => {
                         {skill}
                         <button
                           type="button"
+                          className="cursor-pointer"
                           onClick={() =>
                             form.setValue(
                               "skills",
