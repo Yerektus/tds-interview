@@ -203,6 +203,7 @@ export const UpdateUserModal = ({ user, isOpen, onClose }: UpdateUserModalProps)
                           {skill}
                           <button
                             type="button"
+                            className="cursor-pointer"
                             onClick={() =>
                               form.setValue(
                                 "skills",
