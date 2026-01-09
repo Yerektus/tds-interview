@@ -8,10 +8,10 @@ import { store } from "./common/stores/store";
 import { Toaster } from "sonner";
 
 createRoot(document.getElementById("root")!).render(
-    <StrictMode>
-        <Provider store={store}>
-            <RouterProvider router={router} />
-            <Toaster />
-        </Provider>
-    </StrictMode>,
+  <StrictMode>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+      <Toaster />
+    </Provider>
+  </StrictMode>,
 );
