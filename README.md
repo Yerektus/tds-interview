@@ -27,7 +27,7 @@
 
 1. Клонирование репозитория
 ```bash
-git clone https://github.com/Feesder/tds-interview.git
+git clone https://github.com/Yerektus/tds-interview
 cd tds-interview
 ```
 
