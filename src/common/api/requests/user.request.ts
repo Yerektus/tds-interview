@@ -1,4 +1,11 @@
-import type { User } from "@/common/entities/user";
+type UserDto = {
+  id: string
+  firstName: string;
+  lastName: string;
+  email: string;
+  skills: string[];
+  createdAt: string;
+}
 
-export type UserCreateDto = Omit<User, "id">
-export type UserUpdateDto = Omit<User, "id">
+export type UserCreateDto = Omit<UserDto, "id">
+export type UserUpdateDto = Omit<UserDto, "id">

@@ -10,7 +10,13 @@ import {
   type SortingState,
   type VisibilityState,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, Pencil, Plus, PlusCircle, Trash } from "lucide-react";
+import {
+  ArrowUpDown,
+  ChevronDown,
+  Pencil,
+  PlusCircle,
+  Trash,
+} from "lucide-react";
 
 import { Button } from "@/common/components/ui/button";
 import {
@@ -25,22 +31,18 @@ import { UsersTable } from "../components/users-table/users-table";
 import { useGetUsersQuery } from "@/common/api/users-api";
 import { formatDateTime } from "@/common/utils/date-time-formatter";
 import { useNavigate } from "react-router";
+import { AddUserModal } from "../components/add-user/add-user-modal";
 
-const createColumns = (navigateUserEdit: (userId: number) => void): ColumnDef<User>[] => [
+const createColumns = (
+  navigateUserEdit: (userId: string) => void
+): ColumnDef<User>[] => [
   {
     accessorKey: "id",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Id
-          <ArrowUpDown />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("id")}</div>,
+    enableSorting: false,
+    header: "ID",
+    cell: ({ row }) => (
+      <div className="font-mono lowercase">{row.getValue("id")}</div>
+    ),
   },
   {
     accessorKey: "firstname",
@@ -134,7 +136,12 @@ const createColumns = (navigateUserEdit: (userId: number) => void): ColumnDef<Us
     cell: ({ row }) => {
       return (
         <div className="flex gap-2">
-          <Button variant="outline" size="icon" className="rounded-full" onClick={() => navigateUserEdit(row.original.id)}>
+          <Button
+            variant="outline"
+            size="icon"
+            className="rounded-full"
+            onClick={() => navigateUserEdit(row.original.id)}
+          >
             <Pencil />
           </Button>
           <Button variant="destructive" size="icon" className="rounded-full">
@@ -147,8 +154,13 @@ const createColumns = (navigateUserEdit: (userId: number) => void): ColumnDef<Us
 ];
 
 export function ListUsersView() {
-  const navigate = useNavigate()
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const navigate = useNavigate();
+  const [sorting, setSorting] = React.useState<SortingState>([
+    {
+      id: "createdAt",
+      desc: true,
+    },
+  ]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
@@ -156,21 +168,38 @@ export function ListUsersView() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const { data } = useGetUsersQuery();
+  const [isAddUserModalOpen, setIsAddUserModalOpen] = React.useState(false);
 
-  const columns = React.useMemo(() => createColumns((userId: number) => navigate(`/users/${userId}/edit`)), []);
+  const { data, refetch } = useGetUsersQuery();
+
+  const columns = React.useMemo(
+    () => createColumns((userId: string) => navigate(`/users/${userId}/edit`)),
+    []
+  );
 
   const table = useReactTable({
     data: data || [],
     columns,
+
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
+
+    initialState: {
+      sorting: [
+        {
+          id: "createdAt",
+          desc: true,
+        },
+      ],
+    },
+
     state: {
       sorting,
       columnFilters,
@@ -180,6 +209,17 @@ export function ListUsersView() {
   });
 
   console.log(data);
+
+  const handleAddUserButtonClick = () => {
+    setIsAddUserModalOpen(true);
+  };
+
+  const handleAddUserButtonClose = (needRefresh?: boolean) => {
+    setIsAddUserModalOpen(false);
+    if (needRefresh) {
+      refetch();
+    }
+  };
 
   return (
     <div className="w-full px-10">
@@ -218,12 +258,9 @@ export function ListUsersView() {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
-        <Button
-            variant="default"
-            onClick={() => table.previousPage()}
-          >
-            Add User
-            <PlusCircle />
+        <Button variant="default" onClick={handleAddUserButtonClick}>
+          Add User
+          <PlusCircle />
         </Button>
       </div>
       <div className="overflow-hidden rounded-md border">
@@ -253,6 +290,10 @@ export function ListUsersView() {
           </Button>
         </div>
       </div>
+      <AddUserModal
+        isOpen={isAddUserModalOpen}
+        onClose={handleAddUserButtonClose}
+      />
     </div>
   );
 }
