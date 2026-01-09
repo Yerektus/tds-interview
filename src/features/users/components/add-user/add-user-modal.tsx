@@ -39,7 +39,7 @@ export const AddUserModal = ({ isOpen, onClose }: AddUserModalProps) => {
       email: "",
       skills: [],
     },
-    mode: "onSubmit",
+    mode: "onBlur",
   });
 
   const handleClose = (needRefresh?: boolean) => {
@@ -48,10 +48,6 @@ export const AddUserModal = ({ isOpen, onClose }: AddUserModalProps) => {
   };
 
   const handleSubmit = () => {
-    if (!form.formState.isValid) {
-      return;
-    }
-
     createUser({
       firstName: form.getValues().firstname,
       lastName: form.getValues().lastname,
