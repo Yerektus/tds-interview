@@ -7,6 +7,7 @@
 **Основные технологии:**
 - TypeScript
 - React
+- React Router Dom
 
 **Управление формами и данными:**
 - React Hook Form
