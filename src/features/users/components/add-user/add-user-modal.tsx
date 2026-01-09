@@ -53,7 +53,7 @@ export const AddUserModal = ({ isOpen, onClose }: AddUserModalProps) => {
       email: "",
       skills: [],
     },
-    mode: "onBlur",
+    mode: "onSubmit",
   });
 
   const handleClose = (needRefresh?: boolean) => {

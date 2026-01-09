@@ -59,7 +59,7 @@ export const UpdateUserModal = ({
       email: "",
       skills: [],
     },
-    mode: "onBlur",
+    mode: "onSubmit",
   });
 
   useEffect(() => {

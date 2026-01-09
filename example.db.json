@@ -29,7 +29,6 @@
     { "id": "q9k3", "firstName": "Daniel", "lastName": "Cook", "email": "daniel.cook@x.dummyjson.com", "skills": ["Support", "Legal Counsel"], "createdAt": "2025-01-27T09:00:00.000Z" },
     { "id": "5b0f", "firstName": "Lily", "lastName": "Lee", "email": "lily.lee@x.dummyjson.com", "skills": ["Product Management", "Quality Assurance Engineer"], "createdAt": "2025-01-28T09:00:00.000Z" },
     { "id": "m8s2", "firstName": "Henry", "lastName": "Hill", "email": "henry.hill@x.dummyjson.com", "skills": ["Services", "Sales Manager"], "createdAt": "2025-01-29T09:00:00.000Z" },
-    { "id": "r0a9", "firstName": "Arman", "lastName": "Tulegenov", "email": "arman.tulegenov@example.com", "skills": ["React", "TypeScript"], "createdAt": "2025-01-30T09:00:00.000Z" },
-    { "id": "4b0f", "firstName": "Yerdos", "lastName": "Yerentalov", "email": "qop6261@gmail.com", "skills": ["Product manager"], "createdAt": "2026-01-08T21:50:41.987Z" }
+    { "id": "r0a9", "firstName": "Arman", "lastName": "Tulegenov", "email": "arman.tulegenov@example.com", "skills": ["React", "TypeScript"], "createdAt": "2025-01-30T09:00:00.000Z" }
   ]
 }
