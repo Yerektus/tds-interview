@@ -9,10 +9,11 @@ import { UserDataDisplay } from "@/features/detail-user/components/user-data-dis
 import { Pencil } from "lucide-react";
 import { useState } from "react";
 import { useParams } from "react-router";
+import { Skeleton } from "@/common/components/ui/skeleton";
 
 export const UserDetailView = () => {
   const { userId } = useParams<{ userId: string }>();
-  const { data, refetch } = useGetUserByIdQuery(userId || "");
+  const { data, isLoading, refetch } = useGetUserByIdQuery(userId || "");
 
   const [isUpdateUserModalOpen, setIsUpdateUserModalOpen] = useState(false);
 
@@ -29,14 +30,20 @@ export const UserDetailView = () => {
 
   return (
     <div>
-      <DetailUserBreadcrumbs user={data || ({} as User)} />
+      <DetailUserBreadcrumbs isLoading={isLoading} user={data || ({} as User)} />
       <div className="mt-4">
         <Card className="max-w-xl w-full m-auto">
           <CardHeader>
             <div className="flex justify-between">
               <div className="flex flex-col gap-1">
                 <CardTitle>
-                  {data?.firstname} {data?.lastname}
+                  {isLoading ? (
+                    <Skeleton className="h-4 w-[200px]" />
+                  ) : (
+                    <>
+                      {data?.firstname} {data?.lastname}
+                    </>
+                  )}
                 </CardTitle>
                 <CardDescription>User information</CardDescription>
               </div>
@@ -47,9 +54,9 @@ export const UserDetailView = () => {
           </CardHeader>
           <CardContent>
             <div className="flex flex-col gap-4">
-              <UserDataDisplay label="Email" value={data?.email || ""} />
-              <UserDataDisplay label="Skills" value={data?.skills.join(", ") || ""} />
-              <UserDataDisplay label="Created At" value={formatDateTime(data?.createdAt) || ""} />
+              <UserDataDisplay isLoading={isLoading} label="Email" value={data?.email || ""} />
+              <UserDataDisplay isLoading={isLoading} label="Skills" value={data?.skills.join(", ") || ""} />
+              <UserDataDisplay isLoading={isLoading} label="Created At" value={formatDateTime(data?.createdAt) || ""} />
             </div>
           </CardContent>
         </Card>

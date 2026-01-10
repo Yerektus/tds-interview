@@ -11,8 +11,9 @@ import {
 import { paths } from "@/common/constants/paths";
 
 import type { DetailUserBreadcrumbsProps } from "./detail-user-breadcrumbs.types";
+import { Skeleton } from "@/common/components/ui/skeleton";
 
-export const DetailUserBreadcrumbs = ({ user }: DetailUserBreadcrumbsProps) => {
+export const DetailUserBreadcrumbs = ({ isLoading, user }: DetailUserBreadcrumbsProps) => {
   const navigate = useNavigate();
 
   return (
@@ -25,7 +26,13 @@ export const DetailUserBreadcrumbs = ({ user }: DetailUserBreadcrumbsProps) => {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbPage>
-              {user?.firstname} {user?.lastname}
+              {isLoading ? (
+                <Skeleton className="h-4 w-[150px]" />
+              ) : (
+                <>
+                  {user?.firstname} {user?.lastname}
+                </>
+              )}
             </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
