@@ -132,7 +132,7 @@ export function ListUsersView() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = React.useState(false);
   const [deleteUserId, setDeleteUserId] = React.useState("");
 
-  const { data, refetch } = useGetUsersQuery();
+  const { data, isLoading, refetch } = useGetUsersQuery();
 
   const handleAddUserButtonClick = () => {
     setIsAddUserModalOpen(true);
@@ -200,6 +200,7 @@ export function ListUsersView() {
   });
 
   console.log(data);
+  console.log(isLoading);
 
   return (
     <div>
@@ -209,7 +210,7 @@ export function ListUsersView() {
           <UsersTableToolbar table={table} handleAddUserButtonClick={handleAddUserButtonClick} />
         </div>
         <div className="overflow-hidden rounded-md border">
-          <UsersTable table={table} columns={columns} />
+          <UsersTable isLoading={isLoading} table={table} columns={columns} />
         </div>
         <div className="py-4">
           <UsersTablePaginations table={table} />

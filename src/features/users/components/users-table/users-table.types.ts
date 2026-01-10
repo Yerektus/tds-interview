@@ -2,6 +2,7 @@ import type { User } from "@/common/entities/user";
 import type { ColumnDef, Table } from "@tanstack/react-table";
 
 export interface UsersTableProps {
+  isLoading: boolean;
   table: Table<User>;
   columns: ColumnDef<User>[];
 }
