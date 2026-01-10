@@ -12,11 +12,11 @@ import {
 } from "@/common/components/ui/alert-dialog";
 import { toast } from "sonner";
 
-export const DeleteUserDialog = ({ id, isOpen, onClose }: DeleteUserDialogProps) => {
+export const DeleteUserDialog = ({ user, isOpen, onClose }: DeleteUserDialogProps) => {
   const [deleteUser] = useDeleteUserMutation();
 
   const handleDeleteDialogConfirm = async () => {
-    const response = await deleteUser(id);
+    const response = await deleteUser(user.id);
 
     if (!response.data) {
       toast.error("Failed to delete user.");
@@ -36,11 +36,13 @@ export const DeleteUserDialog = ({ id, isOpen, onClose }: DeleteUserDialogProps)
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Delete User?</AlertDialogTitle>
-          <AlertDialogDescription>Are you sure you want to delete this user?</AlertDialogDescription>
+          <AlertDialogDescription>
+            Are you sure you want to delete {user.firstname} {user.lastname} ({user.email})
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={handleCloseDialog}>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDeleteDialogConfirm}>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={handleDeleteDialogConfirm}>Delete</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

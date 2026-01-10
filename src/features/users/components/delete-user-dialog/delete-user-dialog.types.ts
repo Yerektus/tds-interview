@@ -1,5 +1,7 @@
+import type { User } from "@/common/entities/user";
+
 export interface DeleteUserDialogProps {
-  id: string;
+  user: User;
   isOpen: boolean;
   onClose: (needRefresh?: boolean) => void;
 }

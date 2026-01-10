@@ -25,12 +25,12 @@ import { UsersTablePaginations } from "../components/users-table-paginations/use
 import { paths } from "@/common/constants/paths";
 import { DetailUserBreadcrumbs } from "../components/users-table-breadcrumbs/users-table-breadcrumbs";
 
-const createColumns = (handleDeleteButtonClick: (id: string) => void): ColumnDef<User>[] => [
+const createColumns = (handleDeleteButtonClick: (user: User) => void): ColumnDef<User>[] => [
   {
     accessorKey: "id",
     enableSorting: false,
     header: "ID",
-    cell: ({ row }) => <div className="font-mono lowercase">{row.getValue("id")}</div>,
+    cell: ({ row }) => <div className="font-mono underline underline-offset-2 lowercase">{row.getValue("id")}</div>,
   },
   {
     accessorKey: "firstname",
@@ -102,9 +102,9 @@ const createColumns = (handleDeleteButtonClick: (id: string) => void): ColumnDef
           <Button
             onClick={(e) => {
               e.stopPropagation();
-              handleDeleteButtonClick(row.original.id);
+              handleDeleteButtonClick(row.original);
             }}
-            variant="destructive"
+            variant="outline"
             size="icon"
             className="rounded-full"
           >
@@ -130,7 +130,7 @@ export function ListUsersView() {
 
   const [isAddUserModalOpen, setIsAddUserModalOpen] = React.useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = React.useState(false);
-  const [deleteUserId, setDeleteUserId] = React.useState("");
+  const [deleteUser, setDeleteUser] = React.useState({} as User);
 
   const { data, isLoading, refetch } = useGetUsersQuery();
 
@@ -146,22 +146,22 @@ export function ListUsersView() {
     }
   };
 
-  const handleDeleteButtonClick = (id: string) => {
-    setDeleteUserId(id);
+  const handleDeleteButtonClick = (user: User) => {
+    setDeleteUser(user);
     setIsDeleteDialogOpen(true);
   };
 
   const handleDeleteDialogClose = (needRefresh?: boolean) => {
     setIsDeleteDialogOpen(false);
-    setDeleteUserId("");
+    setDeleteUser({} as User);
     if (needRefresh) {
       refetch();
     }
   };
 
   const onDeleteButtonClick = React.useCallback(
-    (userId: string) => {
-      handleDeleteButtonClick(userId);
+    (user: User) => {
+      handleDeleteButtonClick(user);
     },
     [handleDeleteButtonClick],
   );
@@ -199,9 +199,6 @@ export function ListUsersView() {
     },
   });
 
-  console.log(data);
-  console.log(isLoading);
-
   return (
     <div>
       <DetailUserBreadcrumbs />
@@ -216,7 +213,7 @@ export function ListUsersView() {
           <UsersTablePaginations table={table} />
         </div>
         <AddUserModal isOpen={isAddUserModalOpen} onClose={handleAddUserButtonClose} />
-        <DeleteUserDialog id={deleteUserId} isOpen={isDeleteDialogOpen} onClose={handleDeleteDialogClose} />
+        <DeleteUserDialog user={deleteUser} isOpen={isDeleteDialogOpen} onClose={handleDeleteDialogClose} />
       </div>
     </div>
   );

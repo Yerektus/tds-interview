@@ -3,6 +3,7 @@ import { flexRender } from "@tanstack/react-table";
 import type { UsersTableProps } from "./users-table.types";
 import { useNavigate } from "react-router";
 import { paths } from "@/common/constants/paths";
+import { ChevronRight } from "lucide-react";
 
 export const UsersTable = ({ isLoading, table, columns }: UsersTableProps) => {
   const navigate = useNavigate();
@@ -29,6 +30,10 @@ export const UsersTable = ({ isLoading, table, columns }: UsersTableProps) => {
               <TableRow
                 key={row.id}
                 role="link"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") navigate(paths.getUserDetailPath(row.original.id));
+                }}
                 className="hover:bg-muted/80 cursor-pointer z-5"
                 onClick={() => navigate(paths.getUserDetailPath(row.original.id))}
                 aria-label={`Open profile of ${row.original.firstname} ${row.original.lastname}`}
@@ -36,6 +41,9 @@ export const UsersTable = ({ isLoading, table, columns }: UsersTableProps) => {
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                 ))}
+                <TableCell className="text-right">
+                  <ChevronRight className="text-muted-foreground transition-opacity" size="16" aria-hidden="true" />
+                </TableCell>
               </TableRow>
             ))
           ) : (
