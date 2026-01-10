@@ -3,7 +3,6 @@ import { flexRender } from "@tanstack/react-table";
 import type { UsersTableProps } from "./users-table.types";
 import { useNavigate } from "react-router";
 import { paths } from "@/common/constants/paths";
-import { ChevronRight } from "lucide-react";
 
 export const UsersTable = ({ isLoading, table, columns }: UsersTableProps) => {
   const navigate = useNavigate();
@@ -41,9 +40,6 @@ export const UsersTable = ({ isLoading, table, columns }: UsersTableProps) => {
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                 ))}
-                <TableCell className="text-right">
-                  <ChevronRight className="text-muted-foreground transition-opacity" size="16" aria-hidden="true" />
-                </TableCell>
               </TableRow>
             ))
           ) : (
