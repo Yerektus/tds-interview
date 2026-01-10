@@ -24,6 +24,7 @@ import { UsersTableToolbar } from "../components/users-table-toolbar/users-table
 import { UsersTablePaginations } from "../components/users-table-paginations/users-table-paginations";
 import { paths } from "@/common/constants/paths";
 import { DetailUserBreadcrumbs } from "../components/users-table-breadcrumbs/users-table-breadcrumbs";
+import { SkillsCell } from "../components/skills-cell/skills-cell";
 
 const createColumns = (handleDeleteButtonClick: (user: User) => void): ColumnDef<User>[] => [
   {
@@ -78,7 +79,7 @@ const createColumns = (handleDeleteButtonClick: (user: User) => void): ColumnDef
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.original.skills.join(", ")}</div>,
+    cell: ({ row }) => <SkillsCell skills={row.original.skills} maxVisible={2} />,
   },
   {
     accessorKey: "createdAt",
